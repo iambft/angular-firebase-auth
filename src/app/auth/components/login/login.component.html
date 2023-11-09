@@ -1,0 +1,14 @@
+<div class="container gradient-bg">
+  <ng-container *ngIf="authService.user() === null; else loading">
+    <app-login-form
+    [loginStatus]="loginService.status()"
+    (login)="loginService.login$.next($event)"
+  />
+  <a routerLink="/auth/register">Create account</a>
+  </ng-container>
+</div>
+
+
+<ng-template #loading>
+  <mat-spinner diameter="50"/>
+</ng-template>
