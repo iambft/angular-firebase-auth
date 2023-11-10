@@ -4,7 +4,7 @@
     [loginStatus]="loginService.status()"
     (login)="loginService.login$.next($event)"
   />
-  <a routerLink="/auth/register">Create account</a>
+  <a (click)="onGoToRegistration()">Create account</a>
   </ng-container>
 </div>
 

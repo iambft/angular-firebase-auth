@@ -1,0 +1,6 @@
+<div class="container gradient-bg">
+  <app-register-form
+    [status]="registerService.status()"
+    (register)="registerService.createUser$.next($event)"
+  />
+</div>

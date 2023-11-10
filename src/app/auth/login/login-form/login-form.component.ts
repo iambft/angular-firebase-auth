@@ -7,7 +7,7 @@ import { MatButtonModule} from '@angular/material/button';
 import { MatInputModule} from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
-import { LoginStatus } from 'src/app/auth/services/login/login.service';
+import { LoginStatus } from '../services/login.service';
 
 @Component({
   selector: 'app-login-form',

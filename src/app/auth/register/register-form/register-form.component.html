@@ -1,0 +1,56 @@
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()" #form="ngForm">
+  <mat-form-field appearance="fill">
+    <mat-label>email</mat-label>
+    <input
+      matNativeControl
+      formControlName="email"
+      type="email"
+      placeholder="email"
+    />
+    <mat-icon matPrefix>email</mat-icon>
+    <ng-container *ngIf="(registerForm.controls.email.dirty || form.submitted) && !registerForm.controls.email.valid">
+      <mat-error>Please provide a valid email</mat-error>
+    </ng-container>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>password</mat-label>
+    <input
+      matNativeControl
+      formControlName="password"
+      data-test="create-password-field"
+      type="password"
+      placeholder="password"
+    />
+    <mat-icon matPrefix>lock</mat-icon>
+    <ng-container *ngIf="(registerForm.controls.password.dirty || form.submitted) && !registerForm.controls.password.valid">
+      <mat-error>Password must be at least 8 characters long</mat-error>
+    </ng-container>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>confirm password</mat-label>
+    <input
+      matNativeControl
+      formControlName="confirmPassword"
+      type="password"
+      placeholder="confirm password"
+    />
+    <mat-icon matPrefix>lock</mat-icon>
+    <ng-container *ngIf="(registerForm.controls.confirmPassword.dirty || form.submitted) && registerForm.hasError('passwordMatch')">
+      <mat-error>Must match password field</mat-error>
+    </ng-container>
+  </mat-form-field>
+  <ng-container *ngIf="status === 'error'">
+    <mat-error>Could not create account with those details.</mat-error>
+  </ng-container>
+  <ng-container *ngIf="status === 'creating'">
+    <mat-spinner diameter="50"></mat-spinner>
+  </ng-container>
+  <button
+    mat-raised-button
+    color="accent"
+    type="submit"
+    [disabled]="status === 'creating'"
+  >
+    Submit
+  </button>
+</form>

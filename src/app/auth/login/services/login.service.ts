@@ -1,8 +1,8 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
-import { AuthStateService } from '../auth/auth-state.service';
 import { EMPTY, Subject, catchError, switchMap } from 'rxjs';
 import { Credentials } from '../../interfaces/credentials.interface';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { AuthStateService } from '../../services/auth-state.service';
 
 export type LoginStatus = 'pending' | 'authenticating' | 'success' | 'error';
 
@@ -10,9 +10,7 @@ interface LoginState {
   status: LoginStatus;
 }
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class LoginService {
   private authService = inject(AuthStateService);
 
@@ -40,19 +38,28 @@ export class LoginService {
   status = computed(() => this.state().status);
 
   constructor() {
-    // reducers
+    this.initAuthenticatedReducer();
+    this.initErrorReducer();
+    this.initLoginReducer();
+  }
+
+  initAuthenticatedReducer() {
     this.userAuthenticated$
       .pipe(takeUntilDestroyed())
       .subscribe(() =>
         this.state.update((state) => ({ ...state, status: 'success' }))
       );
+  }
 
+  initLoginReducer() {
     this.login$
       .pipe(takeUntilDestroyed())
       .subscribe(() =>
         this.state.update((state) => ({ ...state, status: 'authenticating' }))
       );
+  }
 
+  initErrorReducer() {
     this.error$
       .pipe(takeUntilDestroyed())
       .subscribe(() =>

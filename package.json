@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --open",
+    "start": "firebase emulators:exec --project=demo-project --ui 'ng serve --open'",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
@@ -15,6 +15,7 @@
     "@angular/common": "^16.2.0",
     "@angular/compiler": "^16.2.0",
     "@angular/core": "^16.2.0",
+    "@angular/fire": "^16.0.0",
     "@angular/forms": "^16.2.0",
     "@angular/material": "^16.2.12",
     "@angular/platform-browser": "^16.2.0",
