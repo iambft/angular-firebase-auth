@@ -4,7 +4,14 @@ import { Credentials } from '../../interfaces/credentials.interface';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { AuthStateService } from '../../services/auth-state.service';
 
-export type LoginStatus = 'pending' | 'authenticating' | 'success' | 'error';
+export enum LoginStatusEnum {
+  Pending = 'pending',
+  Authenticating = 'authenticating',
+  Success = 'success',
+  Error = 'error'
+}
+
+export type LoginStatus = LoginStatusEnum.Pending | LoginStatusEnum.Authenticating | LoginStatusEnum.Success | LoginStatusEnum.Error;
 
 interface LoginState {
   status: LoginStatus;
@@ -31,7 +38,7 @@ export class LoginService {
 
    // state
    private state = signal<LoginState>({
-    status: 'pending',
+    status: LoginStatusEnum.Pending,
   });
 
   // selectors
@@ -47,7 +54,7 @@ export class LoginService {
     this.userAuthenticated$
       .pipe(takeUntilDestroyed())
       .subscribe(() =>
-        this.state.update((state) => ({ ...state, status: 'success' }))
+        this.state.update((state) => ({ ...state, status: LoginStatusEnum.Success }))
       );
   }
 
@@ -55,7 +62,7 @@ export class LoginService {
     this.login$
       .pipe(takeUntilDestroyed())
       .subscribe(() =>
-        this.state.update((state) => ({ ...state, status: 'authenticating' }))
+        this.state.update((state) => ({ ...state, status: LoginStatusEnum.Authenticating }))
       );
   }
 
@@ -63,7 +70,7 @@ export class LoginService {
     this.error$
       .pipe(takeUntilDestroyed())
       .subscribe(() =>
-        this.state.update((state) => ({ ...state, status: 'error' }))
+        this.state.update((state) => ({ ...state, status: LoginStatusEnum.Error }))
       );
   }
 }

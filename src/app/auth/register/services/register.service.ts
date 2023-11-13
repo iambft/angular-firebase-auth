@@ -4,7 +4,14 @@ import { EMPTY, Subject, catchError, switchMap, tap } from 'rxjs';
 import { Credentials } from 'src/app/auth/interfaces/credentials.interface';
 import { AuthStateService } from 'src/app/auth/services/auth-state.service';
 
-export type RegisterStatus = 'pending' | 'creating' | 'success' | 'error';
+export enum RegisterStatusEnum {
+  pending = 'pending',
+  creating = 'creating',
+  success = 'success',
+  error = 'error'
+}
+
+export type RegisterStatus = RegisterStatusEnum.pending | RegisterStatusEnum.creating | RegisterStatusEnum.success | RegisterStatusEnum.error;
 
 interface RegisterState {
   status: RegisterStatus;
@@ -30,7 +37,7 @@ export class RegisterService {
 
   // state
   private state = signal<RegisterState>({
-    status: 'pending',
+    status: RegisterStatusEnum.pending,
   });
 
   // selectors
@@ -46,7 +53,7 @@ export class RegisterService {
     this.userCreated$
     .pipe(takeUntilDestroyed())
     .subscribe(() =>
-      this.state.update((state) => ({ ...state, status: 'success' }))
+      this.state.update((state) => ({ ...state, status: RegisterStatusEnum.success }))
     );
   }
 
@@ -54,7 +61,7 @@ export class RegisterService {
     this.createUser$
     .pipe(takeUntilDestroyed())
     .subscribe(() =>
-      this.state.update((state) => ({ ...state, status: 'creating' }))
+      this.state.update((state) => ({ ...state, status: RegisterStatusEnum.creating }))
     );
   }
 
@@ -65,7 +72,7 @@ export class RegisterService {
       tap(e => console.log(e))
       )
     .subscribe(() =>
-      this.state.update((state) => ({ ...state, status: 'error' }))
+      this.state.update((state) => ({ ...state, status: RegisterStatusEnum.error }))
     );
   }
 }
