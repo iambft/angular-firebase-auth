@@ -1,5 +1,5 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
-import { EMPTY, Subject, catchError, switchMap } from 'rxjs';
+import { EMPTY, Subject, catchError, merge, switchMap } from 'rxjs';
 import { Credentials } from '../../interfaces/credentials.interface';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { AuthStateService } from '../../services/auth-state.service';
@@ -24,16 +24,20 @@ export class LoginService {
   // sources
   error$ = new Subject<any>();
   login$ = new Subject<Credentials>();
+  loginWithGoogle$ = new Subject<void>();
 
-  userAuthenticated$ = this.login$.pipe(
-    switchMap((credentials) =>
-      this.authService.login(credentials).pipe(
-        catchError((err) => {
-          this.error$.next(err);
-          return EMPTY;
-        })
-      )
+  userAuthenticated$ = merge(
+    this.login$.pipe(
+      switchMap((credentials) => this.authService.login(credentials))
+    ),
+    this.loginWithGoogle$.pipe(
+      switchMap(() => this.authService.loginWithGoogle())
     )
+  ).pipe(
+    catchError((err) => {
+      this.error$.next(err);
+      return EMPTY;
+    })
   );
 
    // state

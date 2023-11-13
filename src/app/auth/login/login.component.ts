@@ -35,4 +35,12 @@ export class LoginComponent {
   onGoToRegistration(): void {
     this.router.navigate(['auth', 'register']);
   }
+
+  login(event: any): void {
+    this.loginService.login$.next(event);
+  }
+
+  googleSignin(): void {
+    this.loginService.loginWithGoogle$.next();
+  }
 }
