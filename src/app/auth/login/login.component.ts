@@ -5,12 +5,13 @@ import { LoginFormComponent } from './login-form/login-form.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AuthStateService } from '../services/auth-state.service';
 import { LoginService } from './services/login.service';
+import { GoogleSigninComponent } from './google-signin/google-signin.component';
 
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, RouterModule, LoginFormComponent, MatProgressSpinnerModule],
+  imports: [CommonModule, RouterModule, LoginFormComponent, MatProgressSpinnerModule, GoogleSigninComponent],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
   providers: [LoginService]
