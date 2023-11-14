@@ -7,3 +7,9 @@
     (click)="onLogOut()"
   >Log Out</button>
 </mat-toolbar>
+<div class="page-content">
+  <app-list
+    [dataSource]="listData"
+    [dataConfig]="listConfig"
+  ></app-list>
+</div>
