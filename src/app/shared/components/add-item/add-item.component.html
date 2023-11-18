@@ -1,0 +1,25 @@
+<form [formGroup]="form" (ngSubmit)="onAddItem.emit(form.getRawValue())">
+  <p class="header"> Add item</p>
+  <div class="fields">
+    <ng-container *ngFor="let item of config()">
+      <mat-form-field appearance="fill">
+        <mat-label>{{ item.label }}</mat-label>
+        <input
+          matNativeControl
+          [formControlName]="item.key"
+          [placeholder]="item.label"
+        />
+      </mat-form-field>
+    </ng-container>
+  </div>
+  <div class="controls">
+    <button
+      mat-raised-button
+      [disabled]="isLoading"
+      color="accent"
+      type="submit"
+    >
+      Save
+    </button>
+  </div>
+</form>

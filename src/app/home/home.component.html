@@ -9,7 +9,12 @@
 </mat-toolbar>
 <div class="page-content">
   <app-list
-    [dataSource]="listData"
+    [dataSource]="listData()"
     [dataConfig]="listConfig"
   ></app-list>
+  <app-add-item
+   [dataConfig]="listConfig"
+   [isLoading]="isLoading$ | async"
+   (onAddItem)="onAddItem($event)"
+  ></app-add-item>
 </div>

@@ -1,0 +1,21 @@
+.header {
+  padding: 25px 0 15px;
+  text-align: center;
+  font-size: 24px;
+}
+
+.fields {
+  display: flex;
+  .mat-mdc-form-field {
+    flex: 1;
+    .mdc-text-field--filled {
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+    }
+  }
+}
+
+.controls {
+  display: flex;
+  justify-content: center;
+}
